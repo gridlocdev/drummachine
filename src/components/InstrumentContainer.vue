@@ -6,8 +6,8 @@
         <instrument
           :fileName="instrument.name"
           :keyCode="instrument.keyCode"
-          @click="playSound = true"
-          :playSound="instrument.playSound"
+          @click="initSound = true"
+          :initSound="instrument.initSound"
         ></instrument>
       </div>
     </div>
@@ -38,41 +38,65 @@ export default {
           name: "chime",
           description: "",
           keyCode: "q",
-          playSound: false,
+          initSound: false,
         },
         {
           id: 1,
           name: "chime",
           description: "",
           keyCode: "w",
-          playSound: false,
+          initSound: false,
         },
         {
           id: 2,
           name: "chime",
           description: "",
           keyCode: "e",
-          playSound: false,
+          initSound: false,
         },
         {
           id: 3,
           name: "chime",
           description: "",
           keyCode: "a",
-          playSound: false,
+          initSound: false,
         },
         {
           id: 4,
           name: "chime",
           description: "",
           keyCode: "s",
-          playSound: false,
+          initSound: false,
+        },
+        {
+          id: 5,
+          name: "chime",
+          description: "",
+          keyCode: "d",
+          initSound: false,
         },
       ],
     };
   },
   methods: {
-    chunk: function (collection, size) {
+    handleKeyPress(event) {
+      const key = event.key;
+
+      for (var i = 0; i < this.instruments.length; i++) {
+        // If the key that was pressed corresponds to an instrument's keyCode
+        if (this.instruments[i].keyCode == key) {
+          // Update initSound, so the child method is triggered.
+          this.instruments[i].initSound = true;
+          console.log("SUCCESS!");
+          // Set initSound back to false on the next tick, so that it can be re-triggered.
+          this.$nextTick(() => {
+            this.instruments[i].initSound = false;
+          });
+          break;
+        }
+      }
+    },
+    chunk(collection, size) {
       var result = [];
 
       // default size to two item
@@ -87,23 +111,6 @@ export default {
       }
 
       return result;
-    },
-    handleKeyPress(event) {
-      const key = event.key;
-
-      for (var i = 0; i < this.instruments.length; i++) {
-        // If the key that was pressed corresponds to an instrument's keyCode
-        if (this.instruments[i].keyCode == key) {
-          // Update playSound, so the child method is triggered.
-          this.instruments[i].playSound = true;
-          console.log("SUCCESS!");
-          // Set playSound back to false on the next tick, so that it can be re-triggered.
-          this.$nextTick(() => {
-            this.instruments[i].playSound = false;
-          });
-          break;
-        }
-      }
     },
   },
   created: function () {

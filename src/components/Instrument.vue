@@ -1,6 +1,8 @@
 <template>
   <div>
-    <button class="instrumentButton">{{ keyCode }}</button>
+    <button ref="audioButton" @click="playSound()" class="instrumentButton">
+      {{ keyCode }}
+    </button>
     <audio
       ref="audioElement"
       :src="require(`@/assets/${fileName}.mp3`)"
@@ -15,16 +17,43 @@ export default {
   props: {
     keyCode: String,
     fileName: String,
-    playSound: Boolean,
+    initSound: Boolean,
+  },
+  data: function () {
+    return {
+      animationRequestCount: 0,
+    };
   },
   watch: {
-    playSound: function () {
+    initSound: function () {
       console.log(`@/assets/${this.fileName}.mp3`);
-      if (this.playSound == true) {
-        this.$refs.audioElement.pause();
-        this.$refs.audioElement.currentTime = 0;
-        this.$refs.audioElement.play();
+      if (this.initSound == true) {
+        this.playSound();
       }
+    },
+  },
+  methods: {
+    playSound() {
+      this.$refs.audioElement.pause();
+      this.$refs.audioElement.currentTime = 0;
+      this.$refs.audioElement.play();
+      this.playAnimation(this.$refs.audioElement.duration);
+    },
+    playAnimation(duration) {
+      this.animationRequestCount++;
+      console.log("Audio playing for: " + duration * 1000);
+
+      this.$refs.audioButton.classList = "instrumentButton audioPlaying";
+
+      setTimeout(() => {
+        if (this.animationRequestCount == 1) {
+          this.$refs.audioButton.classList = "instrumentButton";
+          this.firstAnimationPlaying = false;
+          this.animationRequestCount = 0;
+        } else {
+          this.animationRequestCount--;
+        }
+      }, duration * 1000);
     },
   },
 };
@@ -32,6 +61,9 @@ export default {
 
 <style>
 .instrumentButton {
+  transition: 0.3s;
+  transition-timing-function: ease;
+
   margin: 1vw 0;
   width: 100%;
   height: 12.5vw;
@@ -53,5 +85,9 @@ export default {
 }
 .instrumentButton:focus {
   outline-width: 0px;
+}
+
+.audioPlaying {
+  background-color: red;
 }
 </style>
