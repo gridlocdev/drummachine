@@ -1,16 +1,26 @@
 <template>
-  <div id="app">
-    <instrument-container/>
-  </div>
+  <v-app>
+    <v-container>
+      <div class="header"><h2>Drum Machine</h2></div>
+      <v-row>
+        <v-col align="center" justify="center">
+          <instrument-container :columnCount="3" />
+        </v-col>
+        <!-- <v-col>
+          <instrument-container :columnCount="9" />
+        </v-col> -->
+      </v-row>
+    </v-container>
+  </v-app>
 </template>
 
 <script>
-import InstrumentContainer from './components/InstrumentContainer.vue';
+import InstrumentContainer from "./components/InstrumentContainer.vue";
 
 export default {
   name: "App",
   components: {
-    InstrumentContainer
+    InstrumentContainer,
   },
 };
 </script>

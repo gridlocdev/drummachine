@@ -1,11 +1,11 @@
 <template>
   <div>
-    <button ref="audioButton" @click="playSound()" class="instrumentButton">
+    <v-btn height="100%" block x-large ref="audioButton" @click="playSound()" class="instrumentButton">
       {{ keyCode }}
-    </button>
+    </v-btn>
     <audio
       ref="audioElement"
-      :src="require(`@/assets/${fileName}.mp3`)"
+      :src="require(`@/assets/Drums/${fileName}.mp3`)"
       type="audio/mp3"
     ></audio>
   </div>
@@ -18,6 +18,7 @@ export default {
     keyCode: String,
     fileName: String,
     initSound: Boolean,
+    instrumentStyle: String,
   },
   data: function () {
     return {
@@ -26,7 +27,6 @@ export default {
   },
   watch: {
     initSound: function () {
-      console.log(`@/assets/${this.fileName}.mp3`);
       if (this.initSound == true) {
         this.playSound();
       }
@@ -41,7 +41,6 @@ export default {
     },
     playAnimation(duration) {
       this.animationRequestCount++;
-      console.log("Audio playing for: " + duration * 1000);
 
       this.$refs.audioButton.classList = "instrumentButton audioPlaying";
 
@@ -60,13 +59,14 @@ export default {
 </script>
 
 <style>
-.instrumentButton {
+/* .instrumentButton {
   transition: 0.3s;
   transition-timing-function: ease;
 
-  margin: 1vw 0;
+  margin: 10% 0;
+  padding: 30%;
   width: 100%;
-  height: 12.5vw;
+  height: 100%;
 
   background-color: rgb(0, 98, 204);
 
@@ -74,9 +74,12 @@ export default {
   border-radius: 5px;
   box-shadow: 0px 0px 12px -2px rgba(0, 0, 0, 0.5);
 
-  font-size: 1em;
+  font-size: 1.5em;
+  font-weight: bold;
   color: rgb(232, 230, 227);
 }
+
+
 .instrumentButton:hover,
 .instrumentButton:active {
   opacity: 0.8;
@@ -86,8 +89,8 @@ export default {
 .instrumentButton:focus {
   outline-width: 0px;
 }
-
 .audioPlaying {
   background-color: red;
-}
+} 
+*/
 </style>

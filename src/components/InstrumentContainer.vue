@@ -1,18 +1,23 @@
 <template>
   <div class="instrumentContainer">
-    <div class="row" v-for="chunk in instrumentChunks" :key="chunk.id">
-      <!-- [3], [2] -->
-      <div class="column" v-for="instrument in chunk" :key="instrument.id">
-        <instrument
-          :fileName="instrument.name"
-          :keyCode="instrument.keyCode"
-          @click="initSound = true"
-          :initSound="instrument.initSound"
-        ></instrument>
-      </div>
-    </div>
-
-    <div v-for="instrument in instruments" :key="instrument.id"></div>
+    <v-sheet class="ma-5 pa-5" elevation="5" rounded>
+      <v-row class="row" v-for="chunk in instrumentChunks" :key="chunk.id">
+        <!-- [3], [2] -->
+        <v-col
+          no-gutters
+          class="column"
+          v-for="instrument in chunk"
+          :key="instrument.id"
+        >
+          <instrument
+            :fileName="instrument.name"
+            :keyCode="instrument.keyCode"
+            @click="initSound = true"
+            :initSound="instrument.initSound"
+          ></instrument>
+        </v-col>
+      </v-row>
+    </v-sheet>
   </div>
 </template>
 
@@ -24,10 +29,13 @@ export default {
   components: {
     Instrument,
   },
+  props: {
+    columnCount: Number,
+  },
   computed: {
     instrumentChunks: function () {
       // Re-organizes the display order of the displayed instruments inside column-count grid.
-      return this.chunk(this.instruments, 3);
+      return this.chunk(this.instruments, this.columnCount);
     },
   },
   data: function () {
@@ -108,7 +116,6 @@ export default {
         if (this.instruments[i].keyCode == key) {
           // Update initSound, so the child method is triggered.
           this.instruments[i].initSound = true;
-          console.log("SUCCESS!");
           // Set initSound back to false on the next tick, so that it can be re-triggered.
           this.$nextTick(() => {
             this.instruments[i].initSound = false;
@@ -141,17 +148,4 @@ export default {
 </script>
 
 <style scoped>
-.instrumentContainer {
-  border: 2px solid black;
-  border-radius: 5px;
-
-  padding: 3vw;
-
-  width: 50vw;
-  margin: auto;
-  row-gap: 55px;
-}
-.row {
-  column-count: 3;
-}
 </style>
