@@ -132,7 +132,7 @@ export default {
     },
   },
   methods: {
-    stopAllInstrumentSounds: async function () {
+    stopAllInstrumentSounds: function () {
       for (var i = 0; i < this.instruments.length; i++) {
         console.log("this.instruments[i].stopSound = true;");
         // Update stopSound, so the child method is triggered.
@@ -147,10 +147,10 @@ export default {
       });
     },
     startInstrumentSound: async function (instrumentID) {
-      console.log("StartInstrumentSound() hit.");
-
+      
       await this.stopAllInstrumentSounds();
 
+      console.log("StartInstrumentSound() hit.");
       // Update initSound, so the child method is triggered.
       console.log("this.instruments[instrumentID].initSound = true;");
       this.instruments[instrumentID].initSound = true;

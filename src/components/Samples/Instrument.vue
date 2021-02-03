@@ -5,7 +5,8 @@
       height="100"
       x-large
       ref="audioButton"
-      :color="testColor"
+      :color="activeColor"
+      class="instrumentButton"
       :elevation="audioPlayingButtonElevation"
     >
       {{ keyCode }}
@@ -34,8 +35,8 @@ export default {
   data: function () {
     return {
       audioPlayingButtonElevation: 4,
-      testColor: "",
-      loopInterval: "",
+      activeColor: "",
+      loopIntervalInstance: "",
       numberOfLoops: 0,
       audioIsPlaying: false,
     };
@@ -43,75 +44,30 @@ export default {
   watch: {
     initSound: function (newVal) {
       if (newVal == true) {
-        this.playSound();
+        this.playAnimation();
+        this.playInstrumentSound();
       }
     },
     stopSound: function (newVal) {
       if (newVal == true) {
         console.log("StopSound() hit.");
+        this.stopAnimation();
+        this.stopInstrumentSound();
         this.numberOfLoops = 0;
-        this.stopSoundAndAnimation();
-        clearInterval(this.loopInterval);
+        clearInterval(this.loopIntervalInstance);
       }
     },
-    loopToggle: function () {
+    loopToggle: function (newVal) {
       this.numberOfLoops = 0;
-      //this.stopSoundAndAnimation();
-
-      this.stopAnimation(
-        this.$refs.audioElement.duration - this.$refs.audioElement.currentTime
-      );
-
-      clearInterval(this.loopInterval);
+      this.stopAnimation();
+      this.stopInstrumentSound();
+      if (newVal == true) {
+        clearInterval(this.loopIntervalInstance);
+      }
     },
   },
   methods: {
-    stopAnimation(delay = 0) {
-      setTimeout(() => {
-        this.audioPlayingButtonElevation = 4;
-        this.firstAnimationPlaying = false;
-        this.testColor = "";
-      }, delay);
-    },
-    stopSoundAndAnimation() {
-      this.audioIsPlaying = false;
-      this.$refs.audioElement.pause();
-      this.$refs.audioElement.currentTime = 0;
-
-      this.stopAnimation();
-    },
-    playSoundOnce(duration) {
-      console.log("Played sound once");
-      if (this.initSound == true) {
-        CompUtil.ripple(this.$refs.audioButton.$el);
-      }
-
-      this.$refs.audioElement.pause();
-      this.$refs.audioElement.currentTime = 0;
-
-      this.audioIsPlaying = true;
-      this.$refs.audioElement.play();
-      this.playAnimation(duration);
-    },
-    playSoundLooped(duration) {
-      console.log("Duration: " + duration);
-
-      this.playSoundOnce();
-
-      this.loopInterval = setInterval(() => {
-        console.log("Number of Loops: " + this.numberOfLoops);
-
-        if (this.loopToggle == false) {
-          this.numberOfLoops = 0;
-          this.stopSoundAndAnimation();
-          clearInterval(this.loopInterval);
-        } else {
-          this.numberOfLoops++;
-          this.playSoundOnce();
-        }
-      }, duration);
-    },
-    playSound() {
+    playInstrumentSound() {
       if (this.audioIsPlaying != true) {
         const duration = this.$refs.audioElement.duration * 1000;
         if (this.loopToggle == true) {
@@ -123,18 +79,65 @@ export default {
         }
       }
     },
-    playAnimation(duration) {
-      this.audioPlayingButtonElevation = 0;
-      this.testColor = "green";
+    playSoundOnce(duration = 0) {
+      console.log("Played sound once, duration: " + duration);
+      if (this.initSound == true) {
+        CompUtil.ripple(this.$refs.audioButton.$el);
+      }
+
+      this.$refs.audioElement.pause();
+      this.$refs.audioElement.currentTime = 0;
+
+      this.audioIsPlaying = true;
+      this.$refs.audioElement.play();
       if (this.loopToggle == false) {
         setTimeout(() => {
-          this.stopSoundAndAnimation();
+          this.stopInstrumentSound();
+          this.stopAnimation();
         }, duration);
       }
+    },
+    playSoundLooped(duration) {
+      console.log("Duration: " + duration);
+
+      this.playSoundOnce();
+
+      this.loopIntervalInstance = setInterval(() => {
+        console.log("Number of Loops: " + this.numberOfLoops);
+
+        if (this.loopToggle == false) {
+          this.numberOfLoops = 0;
+          this.stopInstrumentSound();
+          this.stopAnimation();
+          clearInterval(this.loopIntervalInstance);
+        } else {
+          this.numberOfLoops++;
+          this.playSoundOnce();
+        }
+      }, duration);
+    },
+    playAnimation() {
+      console.log("playAnimation hit. id: " + this.id);
+      this.audioPlayingButtonElevation = 0;
+      this.activeColor = "green";
+    },
+    stopInstrumentSound() {
+      this.audioIsPlaying = false;
+      this.$refs.audioElement.pause();
+      this.$refs.audioElement.currentTime = 0;
+    },
+    stopAnimation() {
+      console.log("stopAnimation hit. id: " + this.id);
+      this.audioPlayingButtonElevation = 4;
+      this.firstAnimationPlaying = false;
+      this.activeColor = "";
     },
   },
 };
 </script>
 
-<style>
+<style scoped>
+.instrumentButton {
+  transition: 0.3s ease !important;
+}
 </style>
