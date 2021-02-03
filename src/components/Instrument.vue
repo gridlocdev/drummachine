@@ -1,6 +1,13 @@
 <template>
   <div>
-    <v-btn height="100%" block x-large ref="audioButton" @click="playSound()" class="instrumentButton">
+    <v-btn
+      block
+      height="100"
+      x-large
+      ref="audioButton"
+      @click="playSound()"
+      :elevation="audioPlayingButtonElevation"
+    >
       {{ keyCode }}
     </v-btn>
     <audio
@@ -12,6 +19,8 @@
 </template>
 
 <script>
+import CompUtil from "../Utility/CompUtil.js";
+
 export default {
   name: "Instrument",
   props: {
@@ -23,6 +32,7 @@ export default {
   data: function () {
     return {
       animationRequestCount: 0,
+      audioPlayingButtonElevation: 4,
     };
   },
   watch: {
@@ -34,6 +44,10 @@ export default {
   },
   methods: {
     playSound() {
+      if (this.initSound == true) {
+        CompUtil.ripple(this.$refs.audioButton.$el);
+      }
+
       this.$refs.audioElement.pause();
       this.$refs.audioElement.currentTime = 0;
       this.$refs.audioElement.play();
@@ -41,12 +55,11 @@ export default {
     },
     playAnimation(duration) {
       this.animationRequestCount++;
-
-      this.$refs.audioButton.classList = "instrumentButton audioPlaying";
+      this.audioPlayingButtonElevation = 2;
 
       setTimeout(() => {
         if (this.animationRequestCount == 1) {
-          this.$refs.audioButton.classList = "instrumentButton";
+          this.audioPlayingButtonElevation = 4;
           this.firstAnimationPlaying = false;
           this.animationRequestCount = 0;
         } else {
@@ -60,37 +73,18 @@ export default {
 
 <style>
 /* .instrumentButton {
-  transition: 0.3s;
-  transition-timing-function: ease;
-
-  margin: 10% 0;
-  padding: 30%;
-  width: 100%;
-  height: 100%;
-
-  background-color: rgb(0, 98, 204);
-
-  border: none;
-  border-radius: 5px;
-  box-shadow: 0px 0px 12px -2px rgba(0, 0, 0, 0.5);
-
-  font-size: 1.5em;
-  font-weight: bold;
-  color: rgb(232, 230, 227);
+  transition: 0.3s !important;
+  transition-timing-function: ease !important;
 }
-
 
 .instrumentButton:hover,
 .instrumentButton:active {
-  opacity: 0.8;
-  transition: 0.3s;
-  transition-timing-function: ease;
+  opacity: 0.8 !important;
+  transition: 0.3s !important;
+  transition-timing-function: ease !important;
 }
-.instrumentButton:focus {
-  outline-width: 0px;
-}
+
 .audioPlaying {
-  background-color: red;
-} 
-*/
+  background-color: red !important;
+} */
 </style>

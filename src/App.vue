@@ -6,9 +6,18 @@
         <v-col align="center" justify="center">
           <instrument-container :columnCount="3" />
         </v-col>
-        <!-- <v-col>
-          <instrument-container :columnCount="9" />
-        </v-col> -->
+        <v-col
+          v-if="orientation == 'landscape'"
+          align="center"
+          justify="center"
+        >
+          <instrument-container :columnCount="3" />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col v-if="orientation == 'portrait'" align="center" justify="center">
+          <instrument-container :columnCount="5" />
+        </v-col>
       </v-row>
     </v-container>
   </v-app>
@@ -21,6 +30,22 @@ export default {
   name: "App",
   components: {
     InstrumentContainer,
+  },
+  computed: {
+    orientation: function () {
+      if (this.$vuetify.breakpoint.width >= this.$vuetify.breakpoint.height) {
+        // The screen is in Landscape mode
+        console.log("Landscape");
+        return "landscape";
+      } else {
+        console.log("Portrait");
+        // The screen is in Portrait mode
+        return "portrait";
+      }
+    },
+  },
+  mounted() {
+    console.log(this.$vuetify.breakpoint.width);
   },
 };
 </script>
