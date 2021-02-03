@@ -25,7 +25,7 @@
             :loopToggle="loopToggle"
             :fileName="instrument.name"
             :keyCode="instrument.keyCode"
-            @click="initSound = true"
+            @click.native="startInstrumentSound(instrument.id)"
             :initSound="instrument.initSound"
             :stopSound="instrument.stopSound"
           ></instrument>
@@ -56,7 +56,7 @@ export default {
           description: "",
           keyCode: "t",
           initSound: false,
-          stopSound: false
+          stopSound: false,
         },
         {
           id: 1,
@@ -64,7 +64,7 @@ export default {
           description: "",
           keyCode: "y",
           initSound: false,
-          stopSound: false
+          stopSound: false,
         },
         {
           id: 2,
@@ -72,7 +72,7 @@ export default {
           description: "",
           keyCode: "u",
           initSound: false,
-          stopSound: false
+          stopSound: false,
         },
         {
           id: 3,
@@ -80,7 +80,7 @@ export default {
           description: "",
           keyCode: "g",
           initSound: false,
-          stopSound: false
+          stopSound: false,
         },
         {
           id: 4,
@@ -88,7 +88,7 @@ export default {
           description: "",
           keyCode: "h",
           initSound: false,
-          stopSound: false
+          stopSound: false,
         },
         {
           id: 5,
@@ -96,7 +96,7 @@ export default {
           description: "",
           keyCode: "j",
           initSound: false,
-          stopSound: false
+          stopSound: false,
         },
         {
           id: 6,
@@ -104,7 +104,7 @@ export default {
           description: "",
           keyCode: "b",
           initSound: false,
-          stopSound: false
+          stopSound: false,
         },
         {
           id: 7,
@@ -112,7 +112,7 @@ export default {
           description: "",
           keyCode: "n",
           initSound: false,
-          stopSound: false
+          stopSound: false,
         },
         {
           id: 8,
@@ -120,7 +120,7 @@ export default {
           description: "",
           keyCode: "m",
           initSound: false,
-          stopSound: false
+          stopSound: false,
         },
       ],
     };
@@ -132,6 +132,34 @@ export default {
     },
   },
   methods: {
+    stopAllInstrumentSounds: async function () {
+      for (var i = 0; i < this.instruments.length; i++) {
+        console.log("this.instruments[i].stopSound = true;");
+        // Update stopSound, so the child method is triggered.
+        this.instruments[i].stopSound = true;
+        // Set stopSound back to false on the next tick, so that it can be re-triggered.
+      }
+      this.$nextTick(() => {
+        for (var i = 0; i < this.instruments.length; i++) {
+          console.log("this.instruments[i].stopSound = false;");
+          this.instruments[i].stopSound = false;
+        }
+      });
+    },
+    startInstrumentSound: async function (instrumentID) {
+      console.log("StartInstrumentSound() hit.");
+
+      await this.stopAllInstrumentSounds();
+
+      // Update initSound, so the child method is triggered.
+      console.log("this.instruments[instrumentID].initSound = true;");
+      this.instruments[instrumentID].initSound = true;
+      // Set initSound back to false on the next tick, so that it can be re-triggered.
+      this.$nextTick(() => {
+        console.log("this.instruments[instrumentID].initSound = false;");
+        this.instruments[instrumentID].initSound = false;
+      });
+    },
     handleKeyPress(event) {
       this.$emit("keypressed", event.key);
       const key = event.key;
@@ -139,12 +167,7 @@ export default {
       for (var i = 0; i < this.instruments.length; i++) {
         // If the key that was pressed corresponds to an instrument's keyCode
         if (this.instruments[i].keyCode == key) {
-          // Update initSound, so the child method is triggered.
-          this.instruments[i].initSound = true;
-          // Set initSound back to false on the next tick, so that it can be re-triggered.
-          this.$nextTick(() => {
-            this.instruments[i].initSound = false;
-          });
+          this.startInstrumentSound(this.instruments[i].id);
           break;
         }
       }

@@ -5,7 +5,6 @@
       height="100"
       x-large
       ref="audioButton"
-      @click="playSound()"
       :color="testColor"
       :elevation="audioPlayingButtonElevation"
     >
@@ -42,31 +41,44 @@ export default {
     };
   },
   watch: {
-    initSound: function () {
-      if (this.initSound == true) {
+    initSound: function (newVal) {
+      if (newVal == true) {
         this.playSound();
       }
     },
-    stopSound: function() {
-      this.numberOfLoops = 0;
-      this.stopSoundAndAnimation();
-      clearInterval(this.loopInterval);
+    stopSound: function (newVal) {
+      if (newVal == true) {
+        console.log("StopSound() hit.");
+        this.numberOfLoops = 0;
+        this.stopSoundAndAnimation();
+        clearInterval(this.loopInterval);
+      }
     },
     loopToggle: function () {
       this.numberOfLoops = 0;
-      this.stopSoundAndAnimation();
+      //this.stopSoundAndAnimation();
+
+      this.stopAnimation(
+        this.$refs.audioElement.duration - this.$refs.audioElement.currentTime
+      );
+
       clearInterval(this.loopInterval);
     },
   },
   methods: {
+    stopAnimation(delay = 0) {
+      setTimeout(() => {
+        this.audioPlayingButtonElevation = 4;
+        this.firstAnimationPlaying = false;
+        this.testColor = "";
+      }, delay);
+    },
     stopSoundAndAnimation() {
       this.audioIsPlaying = false;
       this.$refs.audioElement.pause();
       this.$refs.audioElement.currentTime = 0;
 
-      this.audioPlayingButtonElevation = 4;
-      this.firstAnimationPlaying = false;
-      this.testColor = "";
+      this.stopAnimation();
     },
     playSoundOnce(duration) {
       console.log("Played sound once");
