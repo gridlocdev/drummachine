@@ -1,7 +1,30 @@
 <template>
   <v-app>
     <v-container>
-      <div class="header"><h2>Drum Machine</h2></div>
+      <v-row>
+        <v-col> </v-col>
+        <v-col>
+          <div class="header"><h2>Drum Machine</h2></div>
+        </v-col>
+        <v-col>
+          <v-btn
+            class="darkModeButton"
+            v-if="$vuetify.theme.dark == true"
+            @click="$vuetify.theme.dark = false"
+            fab
+          >
+            <v-icon> mdi-weather-night </v-icon>
+          </v-btn>
+          <v-btn
+            class="darkModeButton"
+            v-if="$vuetify.theme.dark == false"
+            @click="$vuetify.theme.dark = true"
+            fab
+          >
+            <v-icon> mdi-white-balance-sunny </v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
       <v-row>
         <v-col
           v-if="orientation == 'landscape'"
@@ -62,10 +85,12 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 10px;
+  padding-top: 10px;
 }
 #app p {
   margin: 0 !important;
+}
+.darkModeButton:focus::before {
+  opacity: 0 !important;
 }
 </style>

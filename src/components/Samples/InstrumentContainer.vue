@@ -48,7 +48,7 @@ export default {
   },
   data: function () {
     return {
-      loopToggle: false,
+      loopToggle: true,
       instruments: [
         {
           id: 0,
@@ -147,7 +147,6 @@ export default {
       });
     },
     startInstrumentSound: async function (instrumentID) {
-      
       await this.stopAllInstrumentSounds();
 
       console.log("StartInstrumentSound() hit.");
