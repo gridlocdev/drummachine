@@ -1,6 +1,12 @@
 <template>
   <div class="instrumentContainer">
     <v-sheet class="ma-5 pa-5" elevation="5" rounded>
+      <v-row no-gutters>
+        <v-col no-gutters>
+          <p class="font-weight-bold text-uppercase">Drums</p>
+        </v-col>
+      </v-row>
+      <v-divider class="my-5"></v-divider>
       <v-row class="row" v-for="chunk in instrumentChunks" :key="chunk.id">
         <!-- [3], [2] -->
         <v-col

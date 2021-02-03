@@ -27,7 +27,6 @@ export default {
     keyCode: String,
     fileName: String,
     initSound: Boolean,
-    instrumentStyle: String,
   },
   data: function () {
     return {

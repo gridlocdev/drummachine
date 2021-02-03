@@ -1,6 +1,17 @@
 <template>
   <div class="instrumentContainer">
     <v-sheet class="ma-5 pa-5" elevation="5" rounded>
+      <v-row no-gutters>
+        <v-col class="my-auto" align="center">
+          <p class="font-weight-bold text-uppercase">Samples</p>
+        </v-col>
+        <v-col class="px-auto" align="center">
+          <v-row justify="center">
+            <v-switch v-model="loopToggle" label="Loop" left-label></v-switch>
+          </v-row>
+        </v-col>
+      </v-row>
+      <v-divider class="mb-5"></v-divider>
       <v-row class="row" v-for="chunk in instrumentChunks" :key="chunk.id">
         <!-- [3], [2] -->
         <v-col
@@ -10,6 +21,8 @@
           :key="instrument.id"
         >
           <instrument
+            :id="instrument.id"
+            :loopToggle="loopToggle"
             :fileName="instrument.name"
             :keyCode="instrument.keyCode"
             @click="initSound = true"
@@ -32,83 +45,85 @@ export default {
   props: {
     columnCount: Number,
   },
+  data: function () {
+    return {
+      loopToggle: false,
+      instruments: [
+        {
+          id: 0,
+          name: "untitled18",
+          description: "",
+          keyCode: "t",
+          initSound: false,
+        },
+        {
+          id: 1,
+          name: "untitled31",
+          description: "",
+          keyCode: "y",
+          initSound: false,
+        },
+        {
+          id: 2,
+          name: "untitled44",
+          description: "",
+          keyCode: "u",
+          initSound: false,
+        },
+        {
+          id: 3,
+          name: "untitled45",
+          description: "",
+          keyCode: "g",
+          initSound: false,
+        },
+        {
+          id: 4,
+          name: "untitled66",
+          description: "",
+          keyCode: "h",
+          initSound: false,
+        },
+        {
+          id: 5,
+          name: "untitled86",
+          description: "",
+          keyCode: "j",
+          initSound: false,
+        },
+        {
+          id: 6,
+          name: "untitled104",
+          description: "",
+          keyCode: "b",
+          initSound: false,
+        },
+        {
+          id: 7,
+          name: "untitled105",
+          description: "",
+          keyCode: "n",
+          initSound: false,
+        },
+        {
+          id: 8,
+          name: "untitled146",
+          description: "",
+          keyCode: "m",
+          initSound: false,
+        },
+      ],
+    };
+  },
   computed: {
     instrumentChunks: function () {
       // Re-organizes the display order of the displayed instruments inside column-count grid.
       return this.chunk(this.instruments, this.columnCount);
     },
   },
-  data: function () {
-    return {
-      instruments: [
-        {
-          id: 0,
-          name: "1 - 808 1",
-          description: "",
-          keyCode: "q",
-          initSound: false,
-        },
-        {
-          id: 1,
-          name: "2 - 808 2",
-          description: "",
-          keyCode: "w",
-          initSound: false,
-        },
-        {
-          id: 2,
-          name: "3 - Triangle",
-          description: "",
-          keyCode: "e",
-          initSound: false,
-        },
-        {
-          id: 3,
-          name: "4 - Closed hat",
-          description: "",
-          keyCode: "a",
-          initSound: false,
-        },
-        {
-          id: 4,
-          name: "5 - Clap",
-          description: "",
-          keyCode: "s",
-          initSound: false,
-        },
-        {
-          id: 5,
-          name: "6 - Perc",
-          description: "",
-          keyCode: "d",
-          initSound: false,
-        },
-        {
-          id: 6,
-          name: "7 - Kick",
-          description: "",
-          keyCode: "z",
-          initSound: false,
-        },
-        {
-          id: 7,
-          name: "8 - Hi hat",
-          description: "",
-          keyCode: "x",
-          initSound: false,
-        },
-        {
-          id: 8,
-          name: "9 - Snare",
-          description: "",
-          keyCode: "c",
-          initSound: false,
-        },
-      ],
-    };
-  },
   methods: {
     handleKeyPress(event) {
+      this.$emit("keypressed", event.key);
       const key = event.key;
 
       for (var i = 0; i < this.instruments.length; i++) {

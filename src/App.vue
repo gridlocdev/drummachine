@@ -3,15 +3,24 @@
     <v-container>
       <div class="header"><h2>Drum Machine</h2></div>
       <v-row>
-        <v-col align="center" justify="center">
+        <v-col
+          v-if="orientation == 'landscape'"
+          cols="8"
+          align="center"
+          justify="center"
+        >
+          <drums-instrument-container :columnCount="3" />
+        </v-col>
+        <v-col v-if="orientation == 'portrait'" align="center" justify="center">
           <drums-instrument-container :columnCount="3" />
         </v-col>
         <v-col
+          cols="4"
           v-if="orientation == 'landscape'"
           align="center"
           justify="center"
         >
-          <samples-instrument-container :columnCount="3" />
+          <samples-instrument-container :columnCount="2" />
         </v-col>
       </v-row>
       <v-row>
@@ -59,6 +68,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 10px;
+}
+#app p {
+  margin: 0 !important;
 }
 </style>

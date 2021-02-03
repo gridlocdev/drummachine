@@ -1,0 +1,5 @@
+Objective: 
+
+Only allow one sample to play at a time.
+
+When the "Loop" button is activated, loop the currently selected sample.
