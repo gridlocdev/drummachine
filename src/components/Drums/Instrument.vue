@@ -71,19 +71,4 @@ export default {
 </script>
 
 <style>
-/* .instrumentButton {
-  transition: 0.3s !important;
-  transition-timing-function: ease !important;
-}
-
-.instrumentButton:hover,
-.instrumentButton:active {
-  opacity: 0.8 !important;
-  transition: 0.3s !important;
-  transition-timing-function: ease !important;
-}
-
-.audioPlaying {
-  background-color: red !important;
-} */
 </style>

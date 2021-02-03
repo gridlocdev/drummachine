@@ -52,7 +52,7 @@ export default {
       instruments: [
         {
           id: 0,
-          name: "untitled18",
+          name: "1 - Loop",
           description: "",
           keyCode: "t",
           initSound: false,
@@ -60,7 +60,7 @@ export default {
         },
         {
           id: 1,
-          name: "untitled31",
+          name: "2 - Loop",
           description: "",
           keyCode: "y",
           initSound: false,
@@ -68,7 +68,7 @@ export default {
         },
         {
           id: 2,
-          name: "untitled44",
+          name: "3 - Loop",
           description: "",
           keyCode: "u",
           initSound: false,
@@ -76,7 +76,7 @@ export default {
         },
         {
           id: 3,
-          name: "untitled45",
+          name: "4 - Loop",
           description: "",
           keyCode: "g",
           initSound: false,
@@ -84,7 +84,7 @@ export default {
         },
         {
           id: 4,
-          name: "untitled66",
+          name: "5 - Loop",
           description: "",
           keyCode: "h",
           initSound: false,
@@ -92,7 +92,7 @@ export default {
         },
         {
           id: 5,
-          name: "untitled86",
+          name: "6 - Loop",
           description: "",
           keyCode: "j",
           initSound: false,
@@ -100,7 +100,7 @@ export default {
         },
         {
           id: 6,
-          name: "untitled104",
+          name: "7 - Loop",
           description: "",
           keyCode: "b",
           initSound: false,
@@ -108,7 +108,7 @@ export default {
         },
         {
           id: 7,
-          name: "untitled105",
+          name: "8 - Loop",
           description: "",
           keyCode: "n",
           initSound: false,
@@ -116,7 +116,7 @@ export default {
         },
         {
           id: 8,
-          name: "untitled146",
+          name: "9 - Loop",
           description: "",
           keyCode: "m",
           initSound: false,
