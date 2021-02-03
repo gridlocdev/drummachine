@@ -29,71 +29,96 @@ export default {
     keyCode: String,
     fileName: String,
     initSound: Boolean,
+    stopSound: Boolean,
     loopToggle: Boolean,
   },
   data: function () {
     return {
-      animationRequestCount: 0,
       audioPlayingButtonElevation: 4,
       testColor: "",
+      loopInterval: "",
+      numberOfLoops: 0,
+      audioIsPlaying: false,
     };
   },
   watch: {
     initSound: function () {
       if (this.initSound == true) {
-        this.animationRequestCount = 0;
         this.playSound();
       }
     },
+    stopSound: function() {
+      this.numberOfLoops = 0;
+      this.stopSoundAndAnimation();
+      clearInterval(this.loopInterval);
+    },
     loopToggle: function () {
-      this.stopSound();
+      this.numberOfLoops = 0;
+      this.stopSoundAndAnimation();
+      clearInterval(this.loopInterval);
     },
   },
   methods: {
-    stopSound() {
+    stopSoundAndAnimation() {
+      this.audioIsPlaying = false;
       this.$refs.audioElement.pause();
       this.$refs.audioElement.currentTime = 0;
 
       this.audioPlayingButtonElevation = 4;
       this.firstAnimationPlaying = false;
-      this.animationRequestCount = 0;
       this.testColor = "";
     },
-    // playSoundLooped() {
-    //   if (this.loopToggle == true) {
-    //     console.log(
-    //       "playAnimation hit. Playing Sound: " + this.animationRequestCount
-    //     );
-    //     this.playSound();
-    //   } else {
-    //     console.log("I've been hit. AAAAAAAAAAAA");
-    //     this.$emit("stoppedSound", this.id);
-    //   }
-    // },
-    playSound() {
+    playSoundOnce(duration) {
+      console.log("Played sound once");
       if (this.initSound == true) {
         CompUtil.ripple(this.$refs.audioButton.$el);
       }
 
       this.$refs.audioElement.pause();
       this.$refs.audioElement.currentTime = 0;
+
+      this.audioIsPlaying = true;
       this.$refs.audioElement.play();
-      this.playAnimation(this.$refs.audioElement.duration);
+      this.playAnimation(duration);
+    },
+    playSoundLooped(duration) {
+      console.log("Duration: " + duration);
+
+      this.playSoundOnce();
+
+      this.loopInterval = setInterval(() => {
+        console.log("Number of Loops: " + this.numberOfLoops);
+
+        if (this.loopToggle == false) {
+          this.numberOfLoops = 0;
+          this.stopSoundAndAnimation();
+          clearInterval(this.loopInterval);
+        } else {
+          this.numberOfLoops++;
+          this.playSoundOnce();
+        }
+      }, duration);
+    },
+    playSound() {
+      if (this.audioIsPlaying != true) {
+        const duration = this.$refs.audioElement.duration * 1000;
+        if (this.loopToggle == true) {
+          // If loop is true
+          this.playSoundLooped(duration);
+        } else {
+          // else play once
+          this.playSoundOnce(duration);
+        }
+      }
     },
     playAnimation(duration) {
-      this.animationRequestCount++;
       this.audioPlayingButtonElevation = 0;
       this.testColor = "green";
-      setTimeout(() => {
-        if (this.animationRequestCount == 1) {
-          this.audioPlayingButtonElevation = 4;
-          this.firstAnimationPlaying = false;
-          this.animationRequestCount = 0;
-          this.testColor = "";
-        } else {
-          this.animationRequestCount--;
-        }
-      }, duration * 1000);
+      if (this.loopToggle == false) {
+        setTimeout(() => {
+          this.stopSoundAndAnimation();
+        }, duration);
+      }
     },
   },
 };

@@ -46,17 +46,12 @@ export default {
     orientation: function () {
       if (this.$vuetify.breakpoint.width >= this.$vuetify.breakpoint.height) {
         // The screen is in Landscape mode
-        console.log("Landscape");
         return "landscape";
       } else {
-        console.log("Portrait");
         // The screen is in Portrait mode
         return "portrait";
       }
     },
-  },
-  mounted() {
-    console.log(this.$vuetify.breakpoint.width);
   },
 };
 </script>

@@ -27,6 +27,7 @@
             :keyCode="instrument.keyCode"
             @click="initSound = true"
             :initSound="instrument.initSound"
+            :stopSound="instrument.stopSound"
           ></instrument>
         </v-col>
       </v-row>
@@ -55,6 +56,7 @@ export default {
           description: "",
           keyCode: "t",
           initSound: false,
+          stopSound: false
         },
         {
           id: 1,
@@ -62,6 +64,7 @@ export default {
           description: "",
           keyCode: "y",
           initSound: false,
+          stopSound: false
         },
         {
           id: 2,
@@ -69,6 +72,7 @@ export default {
           description: "",
           keyCode: "u",
           initSound: false,
+          stopSound: false
         },
         {
           id: 3,
@@ -76,6 +80,7 @@ export default {
           description: "",
           keyCode: "g",
           initSound: false,
+          stopSound: false
         },
         {
           id: 4,
@@ -83,6 +88,7 @@ export default {
           description: "",
           keyCode: "h",
           initSound: false,
+          stopSound: false
         },
         {
           id: 5,
@@ -90,6 +96,7 @@ export default {
           description: "",
           keyCode: "j",
           initSound: false,
+          stopSound: false
         },
         {
           id: 6,
@@ -97,6 +104,7 @@ export default {
           description: "",
           keyCode: "b",
           initSound: false,
+          stopSound: false
         },
         {
           id: 7,
@@ -104,6 +112,7 @@ export default {
           description: "",
           keyCode: "n",
           initSound: false,
+          stopSound: false
         },
         {
           id: 8,
@@ -111,6 +120,7 @@ export default {
           description: "",
           keyCode: "m",
           initSound: false,
+          stopSound: false
         },
       ],
     };
