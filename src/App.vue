@@ -4,19 +4,19 @@
       <div class="header"><h2>Drum Machine</h2></div>
       <v-row>
         <v-col align="center" justify="center">
-          <instrument-container :columnCount="3" />
+          <drums-instrument-container :columnCount="3" />
         </v-col>
         <v-col
           v-if="orientation == 'landscape'"
           align="center"
           justify="center"
         >
-          <instrument-container :columnCount="3" />
+          <samples-instrument-container :columnCount="3" />
         </v-col>
       </v-row>
       <v-row>
         <v-col v-if="orientation == 'portrait'" align="center" justify="center">
-          <instrument-container :columnCount="5" />
+          <samples-instrument-container :columnCount="5" />
         </v-col>
       </v-row>
     </v-container>
@@ -24,12 +24,14 @@
 </template>
 
 <script>
-import InstrumentContainer from "./components/InstrumentContainer.vue";
+import DrumsInstrumentContainer from "./components/Drums/InstrumentContainer.vue";
+import SamplesInstrumentContainer from "./components/Samples/InstrumentContainer.vue";
 
 export default {
   name: "App",
   components: {
-    InstrumentContainer,
+    DrumsInstrumentContainer,
+    SamplesInstrumentContainer,
   },
   computed: {
     orientation: function () {

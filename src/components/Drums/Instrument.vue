@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import CompUtil from "../Utility/CompUtil.js";
+import CompUtil from "../../Utility/CompUtil.js";
 
 export default {
   name: "Instrument",
