@@ -50,7 +50,6 @@ export default {
     },
     stopSound: function (newVal) {
       if (newVal == true) {
-        console.log("StopSound() hit.");
         this.stopAnimation();
         this.stopInstrumentSound();
         this.numberOfLoops = 0;
@@ -80,7 +79,6 @@ export default {
       }
     },
     playSoundOnce(duration = 0) {
-      console.log("Played sound once, duration: " + duration);
       if (this.initSound == true) {
         CompUtil.ripple(this.$refs.audioButton.$el);
       }
@@ -98,13 +96,9 @@ export default {
       }
     },
     playSoundLooped(duration) {
-      console.log("Duration: " + duration);
-
       this.playSoundOnce();
 
       this.loopIntervalInstance = setInterval(() => {
-        console.log("Number of Loops: " + this.numberOfLoops);
-
         if (this.loopToggle == false) {
           this.numberOfLoops = 0;
           this.stopInstrumentSound();
@@ -117,7 +111,6 @@ export default {
       }, duration);
     },
     playAnimation() {
-      console.log("playAnimation hit. id: " + this.id);
       this.audioPlayingButtonElevation = 0;
       this.activeColor = "green";
     },
@@ -127,7 +120,6 @@ export default {
       this.$refs.audioElement.currentTime = 0;
     },
     stopAnimation() {
-      console.log("stopAnimation hit. id: " + this.id);
       this.audioPlayingButtonElevation = 4;
       this.firstAnimationPlaying = false;
       this.activeColor = "";

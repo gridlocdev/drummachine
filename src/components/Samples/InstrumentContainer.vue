@@ -134,14 +134,12 @@ export default {
   methods: {
     stopAllInstrumentSounds: function () {
       for (var i = 0; i < this.instruments.length; i++) {
-        console.log("this.instruments[i].stopSound = true;");
         // Update stopSound, so the child method is triggered.
         this.instruments[i].stopSound = true;
         // Set stopSound back to false on the next tick, so that it can be re-triggered.
       }
       this.$nextTick(() => {
         for (var i = 0; i < this.instruments.length; i++) {
-          console.log("this.instruments[i].stopSound = false;");
           this.instruments[i].stopSound = false;
         }
       });
@@ -149,13 +147,10 @@ export default {
     startInstrumentSound: async function (instrumentID) {
       await this.stopAllInstrumentSounds();
 
-      console.log("StartInstrumentSound() hit.");
       // Update initSound, so the child method is triggered.
-      console.log("this.instruments[instrumentID].initSound = true;");
       this.instruments[instrumentID].initSound = true;
       // Set initSound back to false on the next tick, so that it can be re-triggered.
       this.$nextTick(() => {
-        console.log("this.instruments[instrumentID].initSound = false;");
         this.instruments[instrumentID].initSound = false;
       });
     },
