@@ -5,13 +5,24 @@
         <v-col class="my-auto" align="center">
           <p class="font-weight-bold text-uppercase">Samples</p>
         </v-col>
+
         <v-col class="px-auto" align="center">
           <v-row justify="center">
             <v-switch v-model="loopToggle" label="Loop" left-label></v-switch>
           </v-row>
         </v-col>
+        <v-col class="my-auto" align="center">
+          <v-btn
+            class="darkModeButton"
+            small
+            @click="stopAllInstrumentSounds"
+            fab
+          >
+            <v-icon> mdi-stop </v-icon>
+          </v-btn>
+        </v-col>
       </v-row>
-      <v-divider class="mb-5"></v-divider>
+      <v-divider class="my-5"></v-divider>
       <v-row class="row" v-for="chunk in instrumentChunks" :key="chunk.id">
         <!-- [3], [2] -->
         <v-col
