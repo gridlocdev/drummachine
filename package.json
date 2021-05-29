@@ -9,10 +9,10 @@
     "production": "vue-cli-service serve --mode production"
   },
   "dependencies": {
-    "core-js": "^3.12.0",
+    "core-js": "^3.13.0",
     "register-service-worker": "^1.7.1",
     "vue": "^2.6.11",
-    "vuetify": "^2.4.11"
+    "vuetify": "^2.5.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.13",
